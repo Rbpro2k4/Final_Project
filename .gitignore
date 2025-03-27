@@ -1,0 +1,8 @@
+# Build and install folders
+build/
+install/
+log/
+
+# Editor files
+*~
+*.swp

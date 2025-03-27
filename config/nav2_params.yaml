@@ -1,0 +1,72 @@
+amcl:
+  ros__parameters:
+    use_sim_time: true
+    laser_model_type: likelihood_field
+    min_particles: 500
+    max_particles: 2000
+    alpha_slow: 0.001
+    alpha_fast: 0.1
+    update_min_d: 0.2
+    update_min_a: 0.1
+
+map_server:
+  ros__parameters:
+    use_sim_time: true
+    # Path to your map YAML file (see next step)
+    yaml_filename: "/home/rblazy/ros2_ws/src/my_nav2_project/config/map.yaml"
+
+bt_navigator:
+  ros__parameters:
+    use_sim_time: true
+    default_bt_xml_filename: "navigate_w_replanning_and_recovery.xml"
+
+controller_server:
+  ros__parameters:
+    use_sim_time: true
+    controller_frequency: 20.0
+    critics:
+      - name: ObstacleCritic
+        type: dwb_core::ObstacleCritic
+        weight: 1.0
+      - name: GoalAlignCritic
+        type: dwb_core::GoalAlignCritic
+        weight: 1.0
+      - name: PathAlignCritic
+        type: dwb_core::PathAlignCritic
+        weight: 1.0
+      - name: InflationCritic
+        type: dwb_core::InflationCritic
+        weight: 1.0
+
+planner_server:
+  ros__parameters:
+    use_sim_time: true
+    planner_plugin: "GridBased"
+    tolerance: 0.5
+
+costmap_common_params:
+  ros__parameters:
+    use_sim_time: true
+    robot_radius: 0.3
+
+global_costmap:
+  ros__parameters:
+    use_sim_time: true
+    global_frame: "map"
+    robot_base_frame: "base_link"
+    update_frequency: 5.0
+    publish_frequency: 2.0
+    rolling_window: false
+    static_map: true
+
+local_costmap:
+  ros__parameters:
+    use_sim_time: true
+    global_frame: "odom"
+    robot_base_frame: "base_link"
+    update_frequency: 10.0
+    rolling_window: true
+    width: 3.0
+    height: 3.0
+    resolution: 0.05
+
